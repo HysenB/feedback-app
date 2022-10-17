@@ -1,6 +1,13 @@
 import { v4 as uuidv4} from 'uuid';
+import {BrowserRouter as Router, Route, Routes, NavLink} from 'react-router-dom';
 import { useState } from 'react';
+
 import Header from './components/Header'
+import AboutIconLink from './components/AboutIconLink';
+import AboutPage from './components/pages/AboutPage';
+import Card from './components/shared/Card';
+import Post from './components/Post';
+
 import FeedBackData from './data/FeedbackData';
 import FeedbackList from './components/FeedbackList';
 import FeedbackStats from './components/FeedbackStats';
@@ -24,14 +31,29 @@ function App(){
 
 
     return (
-        <>
+        <Router>
             <Header />
             <div className='container'>
-                <FeedbackForm handleAdd={addFeedback} />
-                <FeedbackStats feedback={feedback} />
-                <FeedbackList feedback={feedback} handleDelete={deleteFeedback} />
+                <Routes>
+                    <Route exact path='/' element={
+                        <>
+                            <FeedbackForm handleAdd={addFeedback} />
+                            <FeedbackStats feedback={feedback} />
+                            <FeedbackList feedback={feedback} handleDelete={deleteFeedback} />
+                            
+                        </>
+                    }></Route>
+
+                    <Route path='/about' element={<AboutPage />} />
+                    <Route path='/post/*' element={<Post />} />
+                    
+
+                </Routes>
+
+                <AboutIconLink />
             </div>
-        </>
+        </Router>
+
     )
 }
 
